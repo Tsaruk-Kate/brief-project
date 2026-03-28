@@ -1,0 +1,19 @@
+{
+  "name": "brief-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "mongoose": "^8.23.0",
+    "sqlite3": "^5.1.7"
+  },
+  "description": ""
+}

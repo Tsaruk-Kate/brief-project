@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адміністративна панель</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="page-badge">Admin Panel</div>
+    <h1>Адміністративна панель</h1>
+
+    <div class="links">
+        <a href="/">Повернутися до форми</a>
+    </div>
+
+    <div class="card-buttons" style="margin-bottom: 20px;">
+        <button type="button" id="logoutBtn" class="secondary-btn">Вийти з адмінпанелі</button>
+    </div>
+
+    <div id="briefList"></div>
+
+    <div id="editSection" class="hidden">
+        <h2>Редагування брифу</h2>
+
+        <form id="editForm">
+            <input type="hidden" id="editId">
+
+            <label for="editOrganizationName">Назва організації *</label>
+            <input type="text" id="editOrganizationName" required>
+
+            <label for="editContactPerson">Контактна особа *</label>
+            <input type="text" id="editContactPerson" required>
+
+            <label for="editEmail">Email *</label>
+            <input type="email" id="editEmail" required>
+
+            <label for="editPhone">Телефон</label>
+            <input type="text" id="editPhone">
+
+            <label for="editProjectType">Тип проєкту *</label>
+            <select id="editProjectType" required>
+                <option value="Веб-сайт">Веб-сайт</option>
+                <option value="Інтернет-платформа">Інтернет-платформа</option>
+                <option value="Веб-додаток">Веб-додаток</option>
+            </select>
+
+            <label for="editProjectProblem">Проблема, яку вирішує платформа *</label>
+            <textarea id="editProjectProblem" rows="4" required></textarea>
+
+            <p class="group-title">Мета сайту / платформи *</p>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="editGoals" value="Інформування про діяльність"> Інформування про діяльність</label>
+                <label><input type="checkbox" name="editGoals" value="Залучення волонтерів"> Залучення волонтерів</label>
+                <label><input type="checkbox" name="editGoals" value="Збір пожертв"> Збір пожертв</label>
+                <label><input type="checkbox" name="editGoals" value="Прийом заявок на допомогу"> Прийом заявок на допомогу</label>
+                <label><input type="checkbox" name="editGoals" value="Публікація новин і звітів"> Публікація новин і звітів</label>
+                <label><input type="checkbox" name="editGoals" value="Організація подій"> Організація подій</label>
+                <label><input type="checkbox" name="editGoals" value="Координація волонтерів"> Координація волонтерів</label>
+            </div>
+
+            <p class="group-title">Цільова аудиторія *</p>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="editAudience" value="Волонтери"> Волонтери</label>
+                <label><input type="checkbox" name="editAudience" value="Благодійники"> Благодійники</label>
+                <label><input type="checkbox" name="editAudience" value="Люди, які потребують допомоги"> Люди, які потребують допомоги</label>
+                <label><input type="checkbox" name="editAudience" value="Партнери"> Партнери</label>
+                <label><input type="checkbox" name="editAudience" value="Громадські організації"> Громадські організації</label>
+                <label><input type="checkbox" name="editAudience" value="Адміністратори платформи"> Адміністратори платформи</label>
+            </div>
+
+            <p class="group-title">Основні розділи сайту *</p>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="editSections" value="Головна"> Головна</label>
+                <label><input type="checkbox" name="editSections" value="Про нас"> Про нас</label>
+                <label><input type="checkbox" name="editSections" value="Новини"> Новини</label>
+                <label><input type="checkbox" name="editSections" value="Проєкти"> Проєкти</label>
+                <label><input type="checkbox" name="editSections" value="Події"> Події</label>
+                <label><input type="checkbox" name="editSections" value="Як допомогти"> Як допомогти</label>
+                <label><input type="checkbox" name="editSections" value="Контакти"> Контакти</label>
+                <label><input type="checkbox" name="editSections" value="Зворотний зв’язок"> Зворотний зв’язок</label>
+                <label><input type="checkbox" name="editSections" value="Особистий кабінет"> Особистий кабінет</label>
+                <label><input type="checkbox" name="editSections" value="Звіти"> Звіти</label>
+            </div>
+
+            <label for="editFeatures">Необхідні функції *</label>
+            <textarea id="editFeatures" rows="5" required></textarea>
+
+            <label for="editStakeholders">Основні користувачі / стейкхолдери</label>
+            <textarea id="editStakeholders" rows="3"></textarea>
+
+            <label for="editSuccessCriteria">Критерії успіху проєкту</label>
+            <textarea id="editSuccessCriteria" rows="3"></textarea>
+
+            <label for="editConstraints">Обмеження проєкту</label>
+            <textarea id="editConstraints" rows="3"></textarea>
+
+            <label for="editDesignStyle">Стиль дизайну *</label>
+            <select id="editDesignStyle" required>
+                <option value="Мінімалістичний">Мінімалістичний</option>
+                <option value="Сучасний">Сучасний</option>
+                <option value="Офіційний">Офіційний</option>
+                <option value="Дружній">Дружній</option>
+                <option value="Яскравий соціальний">Яскравий соціальний</option>
+            </select>
+
+            <label for="editReferenceSites">Приклади сайтів</label>
+            <textarea id="editReferenceSites" rows="3"></textarea>
+
+            <label for="editDeadline">Термін реалізації *</label>
+            <input type="text" id="editDeadline" required>
+
+            <label for="editBudget">Бюджет *</label>
+            <select id="editBudget" required>
+                <option value="До 500$">До 500$</option>
+                <option value="500–1500$">500–1500$</option>
+                <option value="1500–3000$">1500–3000$</option>
+                <option value="Понад 3000$">Понад 3000$</option>
+            </select>
+
+            <label for="editAdditionalInfo">Додаткові побажання</label>
+            <textarea id="editAdditionalInfo" rows="4"></textarea>
+
+            <div class="card-buttons">
+                <button type="submit">Зберегти зміни</button>
+                <button type="button" id="cancelEdit" class="secondary-btn">Скасувати</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

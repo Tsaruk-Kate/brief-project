@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бриф на розробку вебплатформи</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="page-badge">Volunteer Platform Brief</div>
+    <h1>Бриф на розробку вебплатформи для організації волонтерської діяльності</h1>
+    <p class="intro-text">
+        Заповніть, будь ласка, бриф. Це допоможе зібрати основні вимоги до майбутнього проєкту:
+        цілі, функціонал, дизайн, обмеження, терміни та бюджет.
+    </p>
+
+    <form id="briefForm">
+        <h2>1. Загальна інформація</h2>
+
+        <label for="organizationName">Назва організації / ініціативи *</label>
+        <input type="text" id="organizationName" name="organizationName" required>
+
+        <label for="contactPerson">Контактна особа *</label>
+        <input type="text" id="contactPerson" name="contactPerson" required>
+
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Телефон</label>
+        <input type="text" id="phone" name="phone" placeholder="+380...">
+
+        <h2>2. Інформація про проєкт</h2>
+
+        <label for="projectType">Тип проєкту *</label>
+        <select id="projectType" name="projectType" required>
+            <option value="">Оберіть тип проєкту</option>
+            <option value="Веб-сайт">Веб-сайт</option>
+            <option value="Інтернет-платформа">Інтернет-платформа</option>
+            <option value="Веб-додаток">Веб-додаток</option>
+        </select>
+
+        <label for="projectProblem">Яку проблему має вирішити платформа? *</label>
+        <textarea id="projectProblem" name="projectProblem" rows="4" required placeholder="Наприклад: складність координації волонтерів, відсутність єдиного простору для реєстрації на події, комунікації та звітності..."></textarea>
+
+        <p class="group-title">Мета сайту / платформи *</p>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="goals" value="Інформування про діяльність"> Інформування про діяльність</label>
+            <label><input type="checkbox" name="goals" value="Залучення волонтерів"> Залучення волонтерів</label>
+            <label><input type="checkbox" name="goals" value="Збір пожертв"> Збір пожертв</label>
+            <label><input type="checkbox" name="goals" value="Прийом заявок на допомогу"> Прийом заявок на допомогу</label>
+            <label><input type="checkbox" name="goals" value="Публікація новин і звітів"> Публікація новин і звітів</label>
+            <label><input type="checkbox" name="goals" value="Організація подій"> Організація подій</label>
+            <label><input type="checkbox" name="goals" value="Координація волонтерів"> Координація волонтерів</label>
+        </div>
+
+        <p class="group-title">Цільова аудиторія *</p>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="audience" value="Волонтери"> Волонтери</label>
+            <label><input type="checkbox" name="audience" value="Благодійники"> Благодійники</label>
+            <label><input type="checkbox" name="audience" value="Люди, які потребують допомоги"> Люди, які потребують допомоги</label>
+            <label><input type="checkbox" name="audience" value="Партнери"> Партнери</label>
+            <label><input type="checkbox" name="audience" value="Громадські організації"> Громадські організації</label>
+            <label><input type="checkbox" name="audience" value="Адміністратори платформи"> Адміністратори платформи</label>
+        </div>
+
+        <p class="group-title">Основні розділи сайту *</p>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="sections" value="Головна"> Головна</label>
+            <label><input type="checkbox" name="sections" value="Про нас"> Про нас</label>
+            <label><input type="checkbox" name="sections" value="Новини"> Новини</label>
+            <label><input type="checkbox" name="sections" value="Проєкти"> Проєкти</label>
+            <label><input type="checkbox" name="sections" value="Події"> Події</label>
+            <label><input type="checkbox" name="sections" value="Як допомогти"> Як допомогти</label>
+            <label><input type="checkbox" name="sections" value="Контакти"> Контакти</label>
+            <label><input type="checkbox" name="sections" value="Зворотний зв’язок"> Зворотний зв’язок</label>
+            <label><input type="checkbox" name="sections" value="Особистий кабінет"> Особистий кабінет</label>
+            <label><input type="checkbox" name="sections" value="Звіти"> Звіти</label>
+        </div>
+
+        <label for="features">Необхідні функції *</label>
+        <textarea id="features" name="features" rows="5" required placeholder="Наприклад: реєстрація та вхід, подача заявки на участь, карта подій, донати, чат, push/email-нагадування, звітність, ролі користувачів..."></textarea>
+
+        <label for="stakeholders">Основні користувачі / стейкхолдери</label>
+        <textarea id="stakeholders" name="stakeholders" rows="3" placeholder="Наприклад: адміністратор, координатор, волонтер, благодійник, партнер..."></textarea>
+
+        <label for="successCriteria">Критерії успіху проєкту</label>
+        <textarea id="successCriteria" name="successCriteria" rows="3" placeholder="Наприклад: зручна реєстрація волонтерів, швидкий пошук подій, прозорі звіти, стабільна робота на мобільних пристроях..."></textarea>
+
+        <label for="constraints">Обмеження проєкту</label>
+        <textarea id="constraints" name="constraints" rows="3" placeholder="Наприклад: обмежений бюджет, стислий термін реалізації, необхідність простої адмінпанелі..."></textarea>
+
+        <h2>3. Дизайн</h2>
+
+        <label for="designStyle">Бажаний стиль дизайну *</label>
+        <select id="designStyle" name="designStyle" required>
+            <option value="">Оберіть стиль</option>
+            <option value="Мінімалістичний">Мінімалістичний</option>
+            <option value="Сучасний">Сучасний</option>
+            <option value="Офіційний">Офіційний</option>
+            <option value="Дружній">Дружній</option>
+            <option value="Яскравий соціальний">Яскравий соціальний</option>
+        </select>
+
+        <label for="referenceSites">Приклади сайтів, які подобаються</label>
+        <textarea id="referenceSites" name="referenceSites" rows="3"></textarea>
+
+        <h2>4. Терміни та бюджет</h2>
+
+        <label for="deadline">Бажаний термін реалізації *</label>
+        <input type="text" id="deadline" name="deadline" required placeholder="Наприклад: 2 місяці">
+
+        <label for="budget">Бюджет *</label>
+        <select id="budget" name="budget" required>
+            <option value="">Оберіть бюджет</option>
+            <option value="До 500$">До 500$</option>
+            <option value="500–1500$">500–1500$</option>
+            <option value="1500–3000$">1500–3000$</option>
+            <option value="Понад 3000$">Понад 3000$</option>
+        </select>
+
+        <label for="additionalInfo">Додаткові побажання</label>
+        <textarea id="additionalInfo" name="additionalInfo" rows="5"></textarea>
+
+        <button type="submit">Надіслати бриф</button>
+    </form>
+
+    <div class="links">
+        <a href="/login.html">Перейти до адміністративної панелі</a>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
