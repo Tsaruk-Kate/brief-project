@@ -13,6 +13,13 @@ const db = new sqlite3.Database(dbPath, (err) => {
 
 db.serialize(() => {
     db.run(`
+        CREATE TABLE IF NOT EXISTS admin_tokens (
+            token TEXT PRIMARY KEY,
+            createdAt INTEGER
+        )
+    `);
+
+    db.run(`
         CREATE TABLE IF NOT EXISTS briefs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             organizationName TEXT NOT NULL,

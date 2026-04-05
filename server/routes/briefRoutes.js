@@ -3,10 +3,19 @@ const router = express.Router();
 const db = require("../db");
 
 function requireAdmin(req, res, next) {
-    if (req.session && req.session.isAdmin) {
-        return next();
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
+
+    if (!token) {
+        return res.status(401).json({ error: "Неавторизований доступ" });
     }
-    return res.status(401).json({ error: "Неавторизований доступ" });
+
+    db.get("SELECT token FROM admin_tokens WHERE token = ?", [token], (err, row) => {
+        if (err || !row) {
+            return res.status(401).json({ error: "Неавторизований доступ" });
+        }
+        next();
+    });
 }
 
 function parseBriefRow(row) {

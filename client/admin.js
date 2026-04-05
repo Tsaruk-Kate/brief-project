@@ -4,6 +4,14 @@ const editForm = document.getElementById("editForm");
 const cancelEditBtn = document.getElementById("cancelEdit");
 const logoutBtn = document.getElementById("logoutBtn");
 
+function getAuthHeaders() {
+    const token = localStorage.getItem("adminToken");
+    return {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+    };
+}
+
 function escapeHtml(text) {
     if (text === null || text === undefined) return "";
     return String(text)
@@ -31,7 +39,9 @@ function formatArray(arr) {
 
 async function checkAuth() {
     try {
-        const response = await fetch("/check-auth");
+        const response = await fetch("/check-auth", {
+            headers: getAuthHeaders()
+        });
         const result = await response.json();
 
         if (!result.authenticated) {
@@ -44,7 +54,9 @@ async function checkAuth() {
 
 async function loadBriefs() {
     try {
-        const response = await fetch("/api/brief");
+        const response = await fetch("/api/brief", {
+            headers: getAuthHeaders()
+        });
         const briefs = await response.json();
 
         if (!response.ok) {
@@ -106,7 +118,9 @@ async function loadBriefs() {
 
 async function editBrief(id) {
     try {
-        const response = await fetch(`/api/brief/${id}`);
+        const response = await fetch(`/api/brief/${id}`, {
+            headers: getAuthHeaders()
+        });
         const brief = await response.json();
 
         if (!response.ok) {
@@ -186,9 +200,7 @@ editForm.addEventListener("submit", async (e) => {
     try {
         const response = await fetch(`/api/brief/${id}`, {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: getAuthHeaders(),
             body: JSON.stringify(updatedData)
         });
 
@@ -214,7 +226,8 @@ async function deleteBrief(id) {
 
     try {
         const response = await fetch(`/api/brief/${id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: getAuthHeaders()
         });
 
         const result = await response.json();
@@ -233,7 +246,11 @@ async function deleteBrief(id) {
 
 logoutBtn.addEventListener("click", async () => {
     try {
-        await fetch("/logout", { method: "POST" });
+        await fetch("/logout", {
+            method: "POST",
+            headers: getAuthHeaders()
+        });
+        localStorage.removeItem("adminToken");
         window.location.href = "/login.html";
     } catch (error) {
         alert("Помилка при виході");
