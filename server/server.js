@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const session = require("express-session");
+const crypto = require("crypto");
 
-require("./db");
+const db = require("./db");
 const briefRoutes = require("./routes/briefRoutes");
 
 const app = express();
@@ -14,20 +14,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../client")));
 
-app.use(session({
-    secret: "brief_super_secret_key",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 }
-}));
-
-function requireAdmin(req, res, next) {
-    if (req.session && req.session.isAdmin) {
-        return next();
-    }
-    return res.status(401).json({ error: "Неавторизований доступ" });
-}
-
 const ADMIN_USERNAME = "admin";
 const ADMIN_PASSWORD = "12345";
 
@@ -35,21 +21,47 @@ app.post("/login", (req, res) => {
     const { username, password } = req.body;
 
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-        req.session.isAdmin = true;
-        return res.json({ message: "Вхід успішний" });
+        const token = crypto.randomBytes(32).toString("hex");
+        db.run(
+            "INSERT INTO admin_tokens (token, createdAt) VALUES (?, ?)",
+            [token, Date.now()],
+            (err) => {
+                if (err) {
+                    return res.status(500).json({ error: "Помилка сервера" });
+                }
+                return res.json({ message: "Вхід успішний", token });
+            }
+        );
+        return;
     }
 
     return res.status(401).json({ error: "Невірний логін або пароль" });
 });
 
 app.post("/logout", (req, res) => {
-    req.session.destroy(() => {
-        res.json({ message: "Вихід виконано" });
-    });
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
+
+    if (token) {
+        db.run("DELETE FROM admin_tokens WHERE token = ?", [token], () => {});
+    }
+    res.json({ message: "Вихід виконано" });
 });
 
 app.get("/check-auth", (req, res) => {
-    res.json({ authenticated: !!(req.session && req.session.isAdmin) });
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
+
+    if (!token) {
+        return res.json({ authenticated: false });
+    }
+
+    db.get("SELECT token FROM admin_tokens WHERE token = ?", [token], (err, row) => {
+        if (err || !row) {
+            return res.json({ authenticated: false });
+        }
+        res.json({ authenticated: true });
+    });
 });
 
 app.get("/", (req, res) => {
@@ -61,10 +73,7 @@ app.get("/login.html", (req, res) => {
 });
 
 app.get("/admin.html", (req, res) => {
-    if (req.session && req.session.isAdmin) {
-        return res.sendFile(path.join(__dirname, "../client", "admin.html"));
-    }
-    return res.redirect("/login.html");
+    res.sendFile(path.join(__dirname, "../client", "admin.html"));
 });
 
 app.use("/api", briefRoutes);

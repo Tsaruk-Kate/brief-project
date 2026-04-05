@@ -21,6 +21,7 @@ loginForm.addEventListener("submit", async (e) => {
             throw new Error(result.error || "Помилка входу");
         }
 
+        localStorage.setItem("adminToken", result.token);
         alert("Вхід успішний.");
         window.location.href = "/admin.html";
     } catch (error) {
