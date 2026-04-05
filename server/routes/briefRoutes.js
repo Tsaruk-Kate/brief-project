@@ -107,7 +107,6 @@ router.post("/brief", (req, res) => {
             email.trim(),
             phone?.trim() || "",
             projectType,
-            projectType,
             projectProblem.trim(),
             JSON.stringify(goals),
             JSON.stringify(audience),

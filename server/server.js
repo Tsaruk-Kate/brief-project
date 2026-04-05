@@ -14,24 +14,31 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../client")));
 
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "12345";
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "12345";
 
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
 
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
         const token = crypto.randomBytes(32).toString("hex");
+
         db.run(
             "INSERT INTO admin_tokens (token, createdAt) VALUES (?, ?)",
             [token, Date.now()],
             (err) => {
                 if (err) {
+                    console.error("LOGIN TOKEN ERROR:", err.message);
                     return res.status(500).json({ error: "Помилка сервера" });
                 }
-                return res.json({ message: "Вхід успішний", token });
+
+                return res.json({
+                    message: "Вхід успішний",
+                    token
+                });
             }
         );
+
         return;
     }
 
